@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мой редактор кода</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    nav {
+        background-color: #f4f4f4;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #333;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+
+    section {
+        display: none;
+    }
+
+    section.active {
+        display: block;
+    }
+  
+    #editor {
+        width: 100%;
+        height: 60%;
+        border: none;
+        resize: none;
+        padding: 10px;
+        font-family: monospace;
+    }
+
+    #preview {
+        width: 100%;
+        height: 60%;
+        border: none;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Редактор кода HTML, CSS, JAVASCRIPT</h1>
+    </header>
+
+    <nav>
+        <a onclick="showPage('home')">Редактор</a>
+        <a onclick="showPage('about')">Просмотр</a>
+        <a onclick="showPage('contact')">Контакт</a>
+    </nav>
+
+    <main>
+        <section id="home" class="active">
+          <textarea id="editor"></textarea>
+        </section>
+
+        <section id="about">
+            <iframe id="preview"></iframe>
+        </section>
+
+        <section id="contact">
+            <h2>Контракты</h2>
+            <a href="https://vk.com/samadluk">Мая страница в ВКонтакте:)</a>
+        </section>
+    </main>
+
+    <footer>
+        &copy; автор: самад:)))
+    </footer>
+
+    <script>
+    	const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+
+        function updatePreview() {
+            preview.srcdoc = editor.value;
+        }
+
+        editor.addEventListener('input', updatePreview);
+
+        updatePreview();
+
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                if (section.id === pageId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+        }
+        
+        // Получаем поле ввода и добавляем слушателя события input для авто-сохранения
+const inputField = document.getElementById('editor');
+const inputFields = document.getElementById('preview');
+
+inputField.addEventListener('input', function() {
+  localStorage.setItem('editorText', inputField.value);
+});
+
+inputFields.addEventListener('input', function() {
+  localStorage.setItem('editorText', inputFields.value);
+});
+
+// При загрузке страницы проверяем, есть ли сохраненный текст и устанавливаем его в поле ввода
+document.addEventListener('DOMContentLoaded', function() {
+  const savedText = localStorage.getItem('editorText');
+  if (savedText) {
+    inputField.value = savedText;
+    inputFields.value = savedText;
+  }
+});
+    </script>
+</body>
+  </html
